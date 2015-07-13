@@ -30,9 +30,9 @@ def spec_fn(spec_dir='.'):
     specs = [f for f in os.listdir(spec_dir) \
              if os.path.isfile(spec_dir + '/' + f) and f.endswith('.spec')]
     if not specs:
-        raise Exception("No spec file found in {0}".format(spec_dir))
+        raise IOError("No spec file found in {0}".format(spec_dir))
     if len(specs) != 1:
-        raise Exception("Multiple spec files found in {0}".format(spec_dir))
+        raise ValueError("Multiple spec files found in {0}".format(spec_dir))
     return specs[0]
 
 
