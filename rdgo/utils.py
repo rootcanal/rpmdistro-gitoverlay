@@ -20,8 +20,8 @@
 import sys
 import subprocess
 import os
+import shutil
 
-from gi.repository import GLib, Gio, GSystem
 
 def fatal(msg):
     print >>sys.stderr, msg
@@ -39,10 +39,14 @@ def run_sync(args, **kwargs):
     subprocess.check_call(args, **kwargs)
 
 def rmrf(path):
-    GSystem.shutil_rm_rf(Gio.File.new_for_path(path), None)
+    if os.path.isdir(path):
+        shutil.rmtree(path)
+    else:
+        os.remove(path)
 
-def ensuredir(path, with_parents=False):
-    GSystem.file_ensure_directory(Gio.File.new_for_path(path), with_parents, None)
+def ensuredir(path):
+    if not os.path.isdir(path):
+        os.makedirs(path)
 
 def ensure_clean_dir(path):
     rmrf(path)
