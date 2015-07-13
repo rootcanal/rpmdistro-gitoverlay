@@ -70,7 +70,13 @@ class TaskBuild(Task):
         tarname = tar_dirname + '.tar.gz'
         tmp_tarpath = distgit_co + '/' + tarname
         self._tar_czf_with_prefix(upstream_co, tar_dirname, tmp_tarpath)
-        spec_fn = specfile.spec_fn(spec_dir=distgit_co)
+        try:
+            spec_fn = specfile.spec_fn(spec_dir=distgit_co)
+        except IOError as e:
+            try:
+                spec_fn = specfile.build_spec_from_setup(distgit_co)
+            except:
+                raise e
         spec = specfile.Spec(distgit_co + '/' + spec_fn)
         has_zero = spec.get_tag('Source0', allow_empty=True) is not None
         source_tag = 'Source'

@@ -25,6 +25,16 @@ import re
 import time
 
 import rpm
+import utils
+
+
+def build_spec_from_setup(setupdir):
+    setup_fn = os.path.join(setupdir, 'setup.py')
+    if not os.path.isfile(setup_fn):
+        raise NotImplementedError("No setup.py to build spec from")
+    utils.run_sync(['python', 'setup.py', 'bdist_rpm', '--spec-only'])
+    return spec_fn(os.path.join(setupdir, dist))
+
 
 def spec_fn(spec_dir='.'):
     specs = [f for f in os.listdir(spec_dir) \
