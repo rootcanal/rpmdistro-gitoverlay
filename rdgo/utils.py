@@ -41,7 +41,7 @@ def run_sync(args, **kwargs):
 def rmrf(path):
     if os.path.isdir(path):
         shutil.rmtree(path)
-    else:
+    elif os.path.exists(path):
         os.remove(path)
 
 def ensuredir(path):
