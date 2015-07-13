@@ -32,8 +32,9 @@ def build_spec_from_setup(setupdir):
     setup_fn = os.path.join(setupdir, 'setup.py')
     if not os.path.isfile(setup_fn):
         raise NotImplementedError("No setup.py to build spec from")
-    utils.run_sync(['python', 'setup.py', 'bdist_rpm', '--spec-only'])
-    return spec_fn(os.path.join(setupdir, dist))
+    dist_dir = os.path.join(setupdir, dist)
+    utils.run_sync(['python', setup_fn, 'bdist_rpm', '--spec-only', '--dist-dir', dist_dir])
+    return spec_fn(dist_dir)
 
 
 def spec_fn(spec_dir='.'):
