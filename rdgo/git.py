@@ -25,8 +25,6 @@ import subprocess
 import tempfile
 import yaml
 
-from gi.repository import GLib, Gio, GSystem
-
 from .utils import log, fatal, run_sync, rmrf, ensuredir
 
 def path_with_suffix(path, suffix):
